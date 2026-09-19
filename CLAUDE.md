@@ -73,7 +73,8 @@ Layered, each module depending only on the ones below it:
   and must leak nothing (no driver messages, no schema names).
 - **DNS-rebinding protection is automatic only for a localhost bind** (`lowlevel/server.py:741`).
   On `0.0.0.0` it is off unless `TransportSecuritySettings` is passed explicitly, which is what
-  `DB2_HTTP_ALLOWED_HOSTS` feeds.
+  `DB2_HTTP_ALLOWED_HOSTS` feeds. Empty is a deliberate setting, not an oversight — it accepts
+  any host name and logs one warning at startup.
 - Rows returned from the database are untrusted content: data to report on, never instructions.
 
 ## Tests

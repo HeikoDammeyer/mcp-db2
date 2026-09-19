@@ -11,3 +11,21 @@ services:
     ports:
       - "3001:3001"
     restart: unless-stopped
+    # Db2 runs as a container next to this one, so both share a network and DB2_HOSTNAME is
+    # its container name (DB2_PORT is then Db2's internal 50000, not the published port).
+    # Db2 somewhere else on the network? Delete this line and the whole networks: block
+    # below — then the container resolves DB2_HOSTNAME the normal way.
+    # Db2 on the Docker host itself? Instead of the network, map the name to the host:
+    #   extra_hosts:
+    #     - "${DB2_HOSTNAME}:host-gateway"
+    networks: [db2net]
+
+networks:
+  db2net:
+    # Not created here: this joins the existing network the Db2 container already sits on.
+    # Its name comes from `docker inspect <db2 container> --format
+    # '{{range $n,$_ := .NetworkSettings.Networks}}{{$n}} {{end}}'`, overridable in .env.
+    # A Db2 container on the default `bridge` network has no DNS at all — connect it to a
+    # user-defined network first: docker network create db2net && docker network connect db2net <container>
+    external: true
+    name: ${DB2_DOCKER_NETWORK:-db2net}

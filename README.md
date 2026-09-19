@@ -75,10 +75,11 @@ from other machines on the same trusted network, with every request carrying a s
 openssl rand -hex 32          # put the result in .env as DB2_HTTP_TOKEN
 ```
 
-`.env` additionally needs `DB2_HTTP_ALLOWED_HOSTS` (the Host header values clients will send, e.g.
-`db2mcp.intern:*`) — without it the Host check is off, and the server says so at startup. Raise
-`DB2_POOL_SIZE` too: over HTTP several clients share the pool and each running query holds a
-connection.
+`DB2_HTTP_ALLOWED_HOSTS` optionally restricts which Host headers are accepted (e.g.
+`db2mcp.intern:*`). Left empty, the server answers on any host name and says so once at startup —
+that is the right setting when clients reach it under several names, and it leaves the bearer
+token and the network itself as what keeps people out. Raise `DB2_POOL_SIZE` too: over HTTP
+several clients share the pool and each running query holds a connection.
 
 ```bash
 docker compose up --build
