@@ -1,0 +1,13 @@
+services:
+  mcp-db2:
+    build:
+      context: .
+    # ibm_db has no linux/aarch64 wheel; on Apple Silicon this runs emulated.
+    platform: linux/amd64
+    # Credentials and limits come from .env at runtime, never from the image.
+    env_file: .env
+    environment:
+      DB2_HTTP_BIND: 0.0.0.0
+    ports:
+      - "3001:3001"
+    restart: unless-stopped

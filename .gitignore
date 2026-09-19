@@ -1,0 +1,22 @@
+# Secrets — never commit connection credentials
+.env
+*.arm
+*.kdb
+*.sth
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+uv.lock.bak
+
+# macOS
+.DS_Store

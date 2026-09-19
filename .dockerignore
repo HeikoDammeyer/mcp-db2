@@ -1,0 +1,19 @@
+# Credentials never go into an image layer — they are injected at runtime.
+.env
+*.arm
+*.kdb
+*.sth
+
+.git
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+*.egg-info/
+tests/
+scripts/patch_clidriver_macos.sh
+.DS_Store

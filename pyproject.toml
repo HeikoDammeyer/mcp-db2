@@ -1,0 +1,44 @@
+[project]
+name = "mcp-db2"
+version = "0.1.0"
+description = "MCP server for read-only access to IBM Db2 LUW databases"
+readme = "README.md"
+authors = [
+    { name = "Heiko Dammeyer", email = "dammeyer@gmx.de" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp[cli]>=2.2.0",
+    "ibm-db>=3.3.0",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "anyio>=4.6",
+    "uvicorn>=0.34",
+]
+
+[project.scripts]
+mcp-db2 = "mcp_db2.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.7",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: requires a live Db2 connection (DB2_* env vars set)",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
